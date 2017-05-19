@@ -1,0 +1,16 @@
+.padding {
+    padding-top: 2.5%;
+}
+.rbtnMargin { 
+	margin-left: 10px; 
+}
+.alertMargin { 
+	margin-top: 10px; 
+}
+.textAreaWidth {
+    resize:vertical;
+}
+.centerImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }

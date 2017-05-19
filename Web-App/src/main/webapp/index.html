@@ -1,0 +1,91 @@
+<!--
+   Copyright 2016 The Johns Hopkins University Applied Physics Laboratory LLC
+   All rights reserved.
+    
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+   
+        http://www.apache.org/licenses/LICENSE-2.0
+   
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -->
+<html>
+   <head>
+      <style>
+         @import url(resources/bootstrap/superhero-bootstrap.min.css);
+         @import url(resources/css/custom.css);
+      </style>
+      <script src="resources/jQuery/jquery.min.js"></script>
+      <script src="resources/bootstrap/bootstrap.min.js"></script>
+      <script src="resources/js/custom.js"/></script> 
+      <script src="resources/js/speechToText.js"/></script>
+      <!-- Chart.js scripts -->
+      <script src="resources/charting/Chart-2.0.min.js"/></script>
+      <title> Dorset Web Demo </title>
+   </head>
+   <body id="background">
+      <div class="container padding">
+         <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+               <div class="panel panel-default">
+                  <div class="panel-body">
+                     <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                           <h2>Dorset Web Demo...</h2>
+                           <div class="form-group">
+                              <input id="question-input-id" type="text" class="form-control" aria-describedby="basic-addon1">
+                           </div>
+                           <div class="form-group">
+                              <textarea id="answer-output-id" class="form-control textAreaWidth" rows="3" aria-describedby="basic-addon1" readonly></textarea>
+                           </div>
+                           <div id="controls" class="form-group centered">
+                              <div id="instructions"> </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-sm-6 text-left">
+                                 Input Type: 
+                                 <div class="btn-group button="radio rbtnMargin" " data-toggle="buttons">
+                                 <input class="rbtnMargin" type="radio" name="speech" id="speech-input-type-rb" /> Speech</input> 
+                                 <input class="rbtnMargin" type="radio" name="text" id="text-input-type-rb" /> Text</input> 
+                              </div>
+                           </div>
+                           <div class="col-sm-6 text-right ">
+                              <div>
+                                 <button id="start-button" type="button" class="btn btn-info btn-lg pull-right">Ask Question</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="alert alert-danger fade alertMargin" id="recognition-error-id">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="image-canvas-id" class="panel panel-default">
+         <div id="image-canvas-body-id" class="panel-body">
+            <div id="image-id"></div>
+            <div id="export-image-button"></div>
+         </div>
+      </div>
+      <div id="lineplot-canvas-id" class="panel panel-default">
+         <div  id="lineplot-canvas-title-id"class="panel-heading text-center"></div>
+         <div id="lineplot-canvas-body-id" class="panel-body">
+            <div class="row">
+               <div id="yaxis-lineplot-canvas-id" class="col-sm-1 text-center"></div>
+               <div class="col-sm-11 ">
+                  <canvas id="lineplot-canvas-graph-id" height="325" width="600"></canvas>
+               </div>
+            </div>
+            <div id="xaxis-lineplot-canvas-id" class="col-sm-12 text-center"></div>
+            <div id="export-canvas-button"></div>
+         </div>
+      </div>
+   </body>
+</html>

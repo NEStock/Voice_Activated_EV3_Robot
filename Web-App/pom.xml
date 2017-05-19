@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.jhuapl</groupId>
+	<artifactId>web</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<name>EV3 Agent Web Demo</name>
+	<description>A web demonstration of the Voice Activated EV3</description>
+
+	<properties>
+		<jetty.version>9.2.13.v20150730</jetty.version>
+		<slf4j.version>1.7.14</slf4j.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>EV3</groupId>
+  			<artifactId>EV3</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+  		</dependency>
+		<dependency>
+			<groupId>edu.jhuapl.dorset</groupId>
+			<artifactId>dorset-api</artifactId>
+			<version>0.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.jhuapl.dorset.agents</groupId>
+			<artifactId>general</artifactId>
+			<version>0.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.jhuapl.dorset.agents</groupId>
+			<artifactId>web-api</artifactId>
+			<version>0.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>edu.jhuapl.dorset.demos.Runner</mainClass>
+						</manifest>
+					</archive>
+					<!-- ensures logback.xml is in classes for standalone container servers -->
+					<webResources>
+						<resource>
+							<directory>src/main/resources</directory>
+							<targetPath>WEB-INF/classes</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>move-main-class</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target name="copy swf files to web project">
+								<!-- the runner class needs to be in root for execution -->
+								<move
+									file="${project.build.directory}/classes/edu/jhuapl/dorset/demos/Runner.class"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/edu/jhuapl/dorset/demos/Runner.class" />
+								<!-- logback.xml must be in root of war for embedded running of jetty -->
+								<copy file="${project.build.directory}/classes/logback.xml"
+									tofile="${project.build.directory}/${project.artifactId}-${project.version}/logback.xml" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<!-- copies dependencies to root of war so that it can be executable -->
+						<id>move-jetty</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeGroupIds>org.eclipse.jetty,javax.servlet,org.slf4j,ch.qos.logback</includeGroupIds>
+							<excludes>*.html,*.css</excludes>
+							<outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,22 @@
+<configuration>
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- make absolute path when running in a server (tomcat, jboss, etc.) -->
+    <file>dorset-web-demo.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>dorset-web-demo.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>10</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%d [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.eclipse" level="WARN" />
+  <!-- see AppInitializer to turn on Jersey logging -->
+  <logger name="org.glassfish.jersey" level="INFO" />
+
+  <root level="INFO">
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>
